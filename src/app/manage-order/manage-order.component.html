@@ -1,0 +1,175 @@
+<div class="w3layouts-banner-top">
+
+</div>
+<!-- banner -->
+<div class="banner about-banner">
+
+  <app-staff-header></app-staff-header>
+
+  <div class="w3-about-heading">
+    <h2>Menu</h2>
+  </div>
+</div>
+<!-- banner -->
+<!--gallery-->
+<div class="gallery">
+  <div class="container">
+    <div class="agileinfo-gallery">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="categoryname">Select Category</label>
+            <select name="categoryname" id="categoryname" #categoryname='ngModel'
+                    ngModel="" required="" (change)="getSubCategoryData(categoryname.value)"
+                    class="form-control">
+              <option value="">Select Category</option>
+              <option *ngFor="let data of getCategory"
+                      value="{{data.categoryname}}">{{data.categoryname}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="subcategoryname">Select SubCategory</label>
+            <select name="subcategoryname" id="subcategoryname"
+                    #subcategoryname='ngModel' ngModel="" required="" (change)="getProductsData(subcategoryname.value)"
+                    class="form-control">
+              <option value="">Select SubCategory</option>
+              <option *ngFor="let data of getSubCategory"
+                      value="{{data.subcategoryid}}">{{data.subcategoryname}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+      <div *ngFor="let data of getProducts; let i=index">
+        <div class="col-md-3 w3-agileits-gallery-grids" style="padding-top: 2%">
+          <a class="w3 wow zoomIn animated" data-wow-delay=".5s"
+             data-lightbox="example-set"
+             data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen.">
+            <img src="{{url}}{{data.photo}}" style="height: 321px; width: 255px" class="img-responsive zoom-img"
+                 alt=""/>
+            <div *ngIf="data.discount>0 ;else other_content">
+            <div class="agile-b-wrapper">
+                <h6>{{data.price}}</h6><h5><span>&#8377;</span>{{data.price - (data.price * data.discount / 100)}}</h5>
+              </div>
+            </div>
+              <ng-template #other_content>
+                <div class="agile-b-wrapper">
+                <h5><span>&#8377;</span>{{data.price}}</h5>
+                </div>
+              </ng-template>
+<!--              <h5><span>&#8377;</span>{{data.price}}</h5>-->
+
+          </a>
+          <div class="text-center">
+            <h4>{{data.productname}}</h4>
+            <button type="button" class="btn btn-success" (click)="addtoCart(data.productid)">Order</button>
+          </div>
+        </div>
+      </div>
+      <!--      <div class="col-md-3 w3-agileits-gallery-grids">-->
+      <!--        <a class="w3 wow zoomIn animated" data-wow-delay=".5s" href="/assets/staffDashboard/images/g1.jpg"-->
+      <!--           data-lightbox="example-set"-->
+      <!--           data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen.">-->
+      <!--          <img src="/assets/staffDashboard/images/g1.jpg" class="img-responsive zoom-img" alt=""/>-->
+      <!--          <div class="agile-b-wrapper">-->
+      <!--            <h5><span>$</span>12</h5>-->
+      <!--          </div>-->
+      <!--        </a>-->
+      <!--      </div>-->
+      <!--      <div class="col-md-3 w3-agileits-gallery-grids">-->
+      <!--        <a class="wow zoomIn animated" data-wow-delay=".7s" href="/assets/staffDashboard/images/g3.jpg"-->
+      <!--           data-lightbox="example-set"-->
+      <!--           data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen.">-->
+      <!--          <img src="/assets/staffDashboard/images/g3.jpg" class="img-responsive zoom-img" alt=""/>-->
+      <!--          <div class="agile-b-wrapper">-->
+      <!--            <h5><span>$</span>20</h5>-->
+      <!--          </div>-->
+      <!--        </a>-->
+      <!--      </div>-->
+      <!--      &lt;!&ndash;      <div class="col-md-6 w3-agileits-gallery-grids gallery-two wthree">&ndash;&gt;-->
+      <!--      &lt;!&ndash;        <a class="wow zoomIn animated" data-wow-delay=".9s" href="/assets/staffDashboard/images/g2.jpg" data-lightbox="example-set" data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen book It has survived not only five centuries, but also remaining essentially unchanged. ">&ndash;&gt;-->
+      <!--      &lt;!&ndash;          <img src="/assets/staffDashboard/images/g2.jpg" class="img-responsive zoom-img" alt=""/>&ndash;&gt;-->
+      <!--      &lt;!&ndash;          <div class="agile-b-wrapper">&ndash;&gt;-->
+      <!--      &lt;!&ndash;            <h5><span>$</span>09</h5>&ndash;&gt;-->
+      <!--      &lt;!&ndash;          </div>&ndash;&gt;-->
+      <!--      &lt;!&ndash;        </a>&ndash;&gt;-->
+      <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
+      <!--      <div class="col-md-3 w3-agileits-gallery-grids agileits-gallery-grids">-->
+      <!--        <a class="wow zoomIn animated" data-wow-delay=".5s" href="/assets/staffDashboard/images/g4.jpg"-->
+      <!--           data-lightbox="example-set"-->
+      <!--           data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen.">-->
+      <!--          <img src="/assets/staffDashboard/images/g4.jpg" class="img-responsive zoom-img" alt=""/>-->
+      <!--          <div class="agile-b-wrapper">-->
+      <!--            <h5><span>$</span>15</h5>-->
+      <!--          </div>-->
+      <!--        </a>-->
+      <!--      </div>-->
+      <!--      <div class="col-md-3 w3-agileits-gallery-grids agileits-gallery-grids">-->
+      <!--        <a class="wow zoomIn animated" data-wow-delay=".7s" href="/assets/staffDashboard/images/g6.jpg"-->
+      <!--           data-lightbox="example-set"-->
+      <!--           data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen.">-->
+      <!--          <img src="/assets/staffDashboard/images/g6.jpg" class="img-responsive zoom-img" alt=""/>-->
+      <!--          <div class="agile-b-wrapper">-->
+      <!--            <h5><span>$</span>10</h5>-->
+      <!--          </div>-->
+      <!--        </a>-->
+      <!--      </div>-->
+      <!--      <div class="col-md-6 w3-agileits-gallery-grids agileits-gallery-grids gallery-two">-->
+      <!--        <a class="wow zoomIn animated" data-wow-delay=".9s" href="/assets/staffDashboard/images/g5.jpg"-->
+      <!--           data-lightbox="example-set"-->
+      <!--           data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen book It has survived not only five centuries, but also essentially unchanged. ">-->
+      <!--          <img src="/assets/staffDashboard/images/g5.jpg" class="img-responsive zoom-img" alt=""/>-->
+      <!--          <div class="agile-b-wrapper">-->
+      <!--            <h5><span>$</span>25</h5>-->
+      <!--          </div>-->
+      <!--        </a>-->
+      <!--      </div>-->
+      <!--      <div class="col-md-6 w3-agileits-gallery-grids gallery-two w3agile-two">-->
+      <!--        <a class="wow zoomIn animated" data-wow-delay=".5s" href="/assets/staffDashboard/images/g7.jpg"-->
+      <!--           data-lightbox="example-set"-->
+      <!--           data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen book It has survived not only five centuries, remaining essentially unchanged. ">-->
+      <!--          <img src="/assets/staffDashboard/images/g7.jpg" class="img-responsive zoom-img" alt=""/>-->
+      <!--          <div class="agile-b-wrapper">-->
+      <!--            <h5><span>$</span>16</h5>-->
+      <!--          </div>-->
+      <!--        </a>-->
+      <!--      </div>-->
+      <!--      <div class="col-md-3 w3-agileits-gallery-grids">-->
+      <!--        <a class="wow zoomIn animated" data-wow-delay=".7s" href="/assets/staffDashboard/images/g8.jpg"-->
+      <!--           data-lightbox="example-set"-->
+      <!--           data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen.">-->
+      <!--          <img src="/assets/staffDashboard/images/g8.jpg" class="img-responsive zoom-img" alt=""/>-->
+      <!--          <div class="agile-b-wrapper">-->
+      <!--            <h5><span>$</span>05</h5>-->
+      <!--          </div>-->
+      <!--        </a>-->
+      <!--      </div>-->
+      <!--      <div class="col-md-3 w3-agileits-gallery-grids">-->
+      <!--        <a class="wow zoomIn animated" data-wow-delay=".9s" href="/assets/staffDashboard/images/g9.jpg"-->
+      <!--           data-lightbox="example-set"-->
+      <!--           data-title="Lorem Ipsum is simply dummy the when an unknown galley of type and scrambled it to make a type specimen.">-->
+      <!--          <img src="/assets/staffDashboard/images/g9.jpg" class="img-responsive zoom-img" alt=""/>-->
+      <!--          <div class="agile-b-wrapper">-->
+      <!--            <h5><span>$</span>22</h5>-->
+      <!--          </div>-->
+      <!--        </a>-->
+      <!--      </div>-->
+      <div class="clearfix"></div>
+      <script src="/assets/staffDashboard/js/lightbox-plus-jquery.min.js"></script>
+    </div>
+  </div>
+</div>
+<!--//gallery-->
+
+<!-- footer -->
+<app-staff-footer></app-staff-footer>
+<!-- //footer -->
+
+<script type="text/javascript" src="/assets/staffDashboard/js/move-top.js"></script>
+<script type="text/javascript" src="/assets/staffDashboard/js/easing.js"></script>
+<!-- here stars scrolling icon -->
+
+<!-- //here ends scrolling icon -->

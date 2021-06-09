@@ -1,0 +1,129 @@
+<div class="w3layouts-banner-top">
+
+</div>
+<!-- banner -->
+<div class="banner about-banner">
+
+  <app-staff-header></app-staff-header>
+
+  <div class="w3-about-heading">
+    <h2>Orders History</h2>
+  </div>
+</div>
+<!-- banner -->
+<!--gallery-->
+
+<div>
+  <div class="col_2">
+    <div class="box_1">
+      <div class="col-md-6 col_1_of_2 span_1_of_2">
+        <a class="tiles_info">
+          <div class="tiles-head red1">
+            <div class="text-center">Total Orders</div>
+          </div>
+          <div class="tiles-body red">{{orderCount}}</div>
+        </a>
+      </div>
+      <div class="col-md-6 col_1_of_2 span_1_of_2">
+        <a class="tiles_info tiles_blue">
+          <div class="tiles-head tiles_blue1">
+            <div class="text-center">Daily Orders</div>
+          </div>
+          <div class="tiles-body blue1">{{dailyOrderCount}}</div>
+        </a>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="box_1">
+      <div class="col-md-6 col_1_of_2 span_1_of_2">
+        <a class="tiles_info">
+          <div class="tiles-head fb1">
+            <div class="text-center"><b>Monthly Orders</b></div>
+          </div>
+          <div class="tiles-body fb2">{{monthlyOrderCount}}</div>
+        </a>
+      </div>
+      <div class="col-md-6 col_1_of_2 span_1_of_2">
+        <a class="tiles_info tiles_blue">
+          <div class="tiles-head tw1">
+            <div class="text-center">Yearly Orders</div>
+          </div>
+          <div class="tiles-body tw2">{{yearlyOrderCount}}</div>
+        </a>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+<div class="gallery">
+  <div class="container">
+    <div class="agileinfo-gallery">
+      <div class="row">
+          <form #fromDateToDateForm='ngForm' (ngSubmit)="getBetweenOrdersCount(fromDateToDateForm.value)">
+            <div class="col-md-6">
+            <div class="form-group">
+              <label for="fromDate">From</label>
+              <input type="date" name="fromDate" id="fromDate" #fromDate='ngModel' ngModel="" required=""
+                     class="form-control">
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+              <label for="toDate">To</label>
+              <input type="date" name="toDate" id="toDate" #toDate='ngModel' ngModel="" required=""
+                     class="form-control">
+            </div>
+            </div>
+            <div class="text-center">
+            <input type="submit" value="Search" class="btn btn-primary" id="btn1"
+                   [disabled]="!fromDateToDateForm.valid">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="panel-body no-padding" style="display: block;">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr class="warning">
+        <!--            <th>#</th>-->
+        <th>Product Detail</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Discount</th>
+        <th>netPrice</th>
+        <th>Total</th>
+        <th>Payment Mode</th>
+        <th>Mobile no.</th>
+        <th>Date-Time</th>
+        <th>status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of getOrderDetails; let i=index">
+        <td><img src="{{url}}{{data.photo}}" alt="" style="height: 80px;"><h4>{{data.productname}}</h4></td>
+        <td>{{data.price}}</td>
+        <td>{{data.qty}}</td>
+        <td>{{data.discount}}</td>
+        <td>{{data.netprice}}</td>
+        <td>{{data.amount}}</td>
+        <td>{{data.paymentmode}}</td>
+        <td>{{data.mobileno}}</td>
+        <td>{{data.datetime}}</td>
+        <td>{{data.status}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+
+
+<app-staff-footer></app-staff-footer>

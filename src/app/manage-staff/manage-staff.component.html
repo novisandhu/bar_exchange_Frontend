@@ -1,0 +1,157 @@
+<div id="wrapper">
+  <app-admin-header></app-admin-header>
+  <div id="page-wrapper">
+    <div class="graphs">
+      <div class="xs">
+        <h3><a data-toggle="collapse" data-target="#formcontent" style="cursor: pointer" (click)="staffForm.reset()">{{action}} Staff</a></h3>
+        <div id="formcontent" class="collapse">
+          <div class="tab-content">
+            <div class="tab-pane active" id="horizontal-form">
+              <form class="form-horizontal" #staffForm='ngForm' (ngSubmit)="actionOnStaff(staffForm.value)">
+                <div class="form-group">
+                  <label for="staffusername" class="col-sm-2 control-label">Staff UserName</label>
+                  <div class="col-sm-8">
+                    <input type="text" [(ngModel)]='_staffusername' #staffusername='ngModel' required ngModel=""
+                           name="staffusername" class="form-control" id="staffusername" placeholder="staffuser Name">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(staffusername.touched && staffusername.errors && staffusername.errors.required)">Enter
+                      Staff UserName</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="password" class="col-sm-2 control-label">Password</label>
+                  <div class="col-sm-8">
+                    <input type="password" [(ngModel)]='_password' #password='ngModel' required ngModel=""
+                           name="password" class="form-control" id="password" placeholder="Password">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(password.touched && password.errors && password.errors.required)">Enter
+                      password</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="email" class="col-sm-2 control-label">Email</label>
+                  <div class="col-sm-8">
+                    <input type="email" [(ngModel)]='_email' #email='ngModel' required ngModel=""
+                           name="email" class="form-control" id="email" placeholder="email">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(email.touched && email.errors && email.errors.required)">Enter
+                      Email</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="mobile" class="col-sm-2 control-label">Mobile No.</label>
+                  <div class="col-sm-8">
+                    <input type="text" [(ngModel)]='_mobile' #mobile='ngModel' required ngModel=""
+                           name="mobile" class="form-control" id="mobile" placeholder="mobile no.">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(mobile.touched && mobile.errors && mobile.errors.required)">Enter
+                      Mobile No.</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="type" class="col-sm-2 control-label">Type</label>
+                  <div class="col-sm-8">
+                    <select name="type" [(ngModel)]='_type' id="type" #type='ngModel'
+                            ngModel="" required=""
+                            class="form-control">
+                      <option value="">Select Type</option>
+                      <option value="Captain">Captain</option>
+                      <option value="Kitchen">Kitchen</option>
+                      <option value="Cashier">Cashier</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(type.touched && type.errors && type.errors.required)">Enter
+                      Type</label>
+                  </div>
+                </div>
+                <div class="panel-footer">
+                  <div class="row">
+                    <div class="col-sm-1 col-sm-offset-2">
+                      <input type="submit" value="{{action}}" class="btn-success btn" id="btn1"
+                             [disabled]="!staffForm.valid">
+                    </div>
+                    <div class="col-sm-1">
+                      <button type="button" class="btn-default btn" data-toggle="collapse" data-target="#formcontent"
+                              (click)="resetForm(staffForm)">Cancel
+                      </button>
+                    </div>
+                    <div>
+                      <label class="text-success">{{serverResponse}}</label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
+             data-widget-static="">
+          <div class="panel-heading">
+            <h2>Staff Table</h2>
+            <div class="panel-ctrls" data-actions-container=""
+                 data-action-collapse="{&quot;target&quot;: &quot;.panel-body&quot;}"><span
+              class="button-icon has-bg"><i class="ti ti-angle-down"></i></span></div>
+          </div>
+          <div class="panel-body no-padding" style="display: block;">
+            <table class="table table-striped">
+              <thead>
+              <tr class="warning">
+                <!--            <th>#</th>-->
+                <th>Staff UserName</th>
+                <th>Email</th>
+                <th>Mobile No.</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th colspan="2">Controls</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <tr *ngFor="let data of getStaff">
+                <td>{{data.staffusername}}</td>
+                <td>{{data.email}}</td>
+                <td>{{data.mobile}}</td>
+                <td>{{data.type}}</td>
+                <td>
+                  <div *ngIf="data.status==='active';else other_content">
+                    <button type="button" class="btn btn-primary"
+                            (click)="changeStaffStatus({staffusername:data.staffusername,status:data.status})">{{data.status}}</button>
+                  </div>
+
+                  <ng-template #other_content>
+                    <button type="button" class="btn btn-danger"
+                            (click)="changeStaffStatus({staffusername:data.staffusername,status:data.status})">{{data.status}}</button>
+                  </ng-template>
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-danger" (click)="deleteStaff(data.staffusername)"><i
+                    class="fas fa-trash-alt"></i></button>
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#formcontent" href="#formcontent"
+                          (click)="editStaff({staffusername:data.staffusername,password:data.password,email:data.email,mobile:data.mobile,type:data.type})">
+                    <i class="fas fa-edit"></i></button>
+                </td>
+
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-staff-footer></app-staff-footer>

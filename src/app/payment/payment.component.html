@@ -1,0 +1,199 @@
+<div class="w3layouts-banner-top">
+
+</div>
+<!-- banner -->
+<div class="banner about-banner">
+
+  <app-staff-header></app-staff-header>
+
+  <div class="w3-about-heading">
+    <h2>Payment</h2>
+  </div>
+</div>
+<!-- banner -->
+<!--gallery-->
+<div class="gallery" style="background-color: whitesmoke">
+  <div class="container">
+    <div class="agileinfo-gallery" >
+      <div class="row">
+        <div class="col-md-10">
+          <form #mobileDetailForm='ngForm' (ngSubmit)="searchMobileNo(mobile.value)">
+            <div class="form-group">
+              <label for="mobile">Enter Mobile no.</label>
+              <input type="number" #mobile='ngModel' ngModel="" name="mobile" id="mobile" required=""
+                     class="form-control">
+              <label class="text-danger" *ngIf="(mobile.touched && mobile.errors && mobile.errors.required)">Enter
+                Mobile no.</label>
+            </div>
+
+            <div class="form-group">
+
+              <input type="submit" value="Search" class="btn btn-primary" id="btn1"
+                     [disabled]="!mobileDetailForm.valid">
+              <!--              <p>{{serverResponse}}</p>-->
+
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+
+
+    <div class="panel-body no-padding" style="display: block;">
+      <div class="table-responsive">
+
+        <div *ngIf="allOrders.length>0; then withOrders else withoutOrders"></div>
+        <ng-template #withOrders>
+          <div *ngFor="let AllOrder of allOrders;let i=index" class="table-responsive mb-3"
+               style="border: 1px solid red">
+            <table class="table">
+              <tr style="font-size: 17px">
+                <th><strong class="text-dark">Sr&nbsp;No. -</strong> {{i + 1}}&nbsp;|&nbsp;<strong class="text-dark">Order
+                  ID -</strong> {{AllOrder.orderid}}</th>
+
+                <td><strong class="text-dark">Mobile No -</strong> {{AllOrder.mobileno}}</td>
+                <td class="text-capitalize"><strong class="text-dark">Staffusername
+                  -</strong> {{AllOrder.staffusername}}</td>
+              </tr>
+              <tr style="font-size: 17px">
+                <td><strong class="text-dark">Date -</strong> {{AllOrder.datetime}}</td>
+                <td>
+                  <button class="btn btn-warning" data-toggle="modal" type="button"
+                          (click)="getorderid(AllOrder.orderid,AllOrder.amount)" data-target="#modal1">Get Payment
+                  </button>
+                </td>
+                <td><strong class="text-dark">Total Amount -</strong> {{AllOrder.amount}}</td>
+                <td></td>
+              </tr>
+              <tr *ngIf="AllOrder.details.length>0">
+                <td colspan="5">
+                  <table class="table table-bordered">
+                    <thead>
+                    <tr class="h6 text-center bg-dark text-white">
+                      <th>Sr No.</th>
+                      <th>Item Name</th>
+                      <th>Photo</th>
+                      <th>Price</th>
+                      <th>Quantity</th>
+                      <th>Netprice</th>
+                    </tr>
+                    </thead>
+                    <tbody style="background: radial-gradient(#f8b0b0, #b9bef3);color: #000;font-size: 16px">
+                    <tr *ngFor="let orderdetail of AllOrder.details;let j=index">
+                      <td>{{j + 1}}</td>
+                      <td>{{orderdetail.productname}}</td>
+                      <td><img src="{{url}}{{orderdetail.photo}}" height="80" alt=""></td>
+                      <td>{{orderdetail.price}}</td>
+                      <td>{{orderdetail.qty}}</td>
+                      <td>{{orderdetail.netprice}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr style="background-color: #eee;">
+                <td colspan="4" class="text-center" style="font-size: 17px">---------- End of Order {{i + 1}}----------
+                </td>
+              </tr>
+            </table>
+          </div>
+        </ng-template>
+        <ng-template #withoutOrders>
+          <div class="jumbotron">
+            <h2 class="text-danger text-center">No Orders To Show <i class="far fa-frown"></i></h2>
+          </div>
+        </ng-template>
+        <!--        <table class="table table-striped">-->
+        <!--          <thead>-->
+        <!--          <tr class="warning">-->
+        <!--            &lt;!&ndash;            <th>#</th>&ndash;&gt;-->
+        <!--&lt;!&ndash;            `orderid`, `amount`, `datetime`, `paymentmode`, `mobileno`, `status`, `staffusername`&ndash;&gt;-->
+        <!--            <th>Order No</th>-->
+        <!--            <th>Amount</th>-->
+        <!--            <th>Datetime</th>-->
+        <!--            <th>PaymentMode</th>-->
+        <!--            <th>Mobileno</th>-->
+        <!--            <th>status</th>-->
+        <!--            <th>Staff UserName</th>-->
+        <!--          </tr>-->
+        <!--          </thead>-->
+        <!--          <tbody>-->
+        <!--          <tr *ngFor="let data of allOrders; let i=index">-->
+
+        <!--            <td>{{data.orderid}}</td>-->
+        <!--            <td>{{data.amount}}</td>-->
+        <!--            <td>{{data.datetime}}</td>-->
+        <!--            <td>{{data.paymentmode}}</td>-->
+        <!--            <td>{{data.mobileno}}</td>-->
+        <!--            <td>{{data.status}}</td>-->
+        <!--            <td>{{data.staffusername}}</td>-->
+        <!--          </tr>-->
+
+
+        <!--          </tbody>-->
+        <!--          <tfoot>-->
+        <!--          <tr>-->
+        <!--&lt;!&ndash;            <th colspan="9" class="text-right" *ngIf="getPaymentDetails!==undefined"><strong>Total Amount : {{getPaymentDetails[0].amount}}</strong></th>&ndash;&gt;-->
+        <!--          </tr>-->
+        <!--          </tfoot>-->
+        <!--        </table>-->
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modal1" #model1>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h2>Confirm Payment</h2>
+        <button class="close" type="button" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form #confirmPaymentForm='ngForm' (ngSubmit)="initPay(confirmPaymentForm.value)">
+          <input type="hidden" [(ngModel)]='_orderid' name="orderid" #orderid='ngModel' ngModel="" id="orderid">
+          <input type="hidden" [(ngModel)]='price' name="totalamt" #totalamt='ngModel' ngModel="" id="totalamt">
+          <div class="form-group">
+            <label for="paymentmode">Select Payment Mode</label>
+            <select [(ngModel)]='_paymentmode' name="paymentmode" id="paymentmode" #paymentmode='ngModel' ngModel=""
+                    required="" class="form-control">
+              <option selected value="">Select Category</option>
+              <option value="Cash">Cash</option>
+              <option value="Online">Online</option>
+            </select>
+            <label class="text-danger"
+                   *ngIf="(paymentmode.touched && paymentmode.errors && paymentmode.errors.required)">Select Payment
+              Mode</label>
+          </div>
+          <div class="form-group">
+            <input type="submit" value="Pay" class="btn btn-primary" [disabled]="!confirmPaymentForm.valid">
+            <!--            <p>{{serverResponse}}</p>-->
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id="m1" class="close" type="button" data-dismiss="modal">close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<a id="m2" type="button" class="hidden" hidden data-toggle="modal" data-target="#modal2">Model2</a>
+<div class="modal fade" id="modal2" #model2>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h2>Payment Message</h2>
+        <button class="close" type="button" data-dismiss="modal2">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h4>{{serverResponse}}</h4>
+      </div>
+      <div class="modal-footer">
+        <button class="close" type="button" data-dismiss="modal">close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-staff-footer></app-staff-footer>

@@ -1,0 +1,213 @@
+<div id="wrapper">
+  <app-admin-header></app-admin-header>
+  <div id="page-wrapper" style="padding: 0 30px">
+    <div class="graphs">
+      <div class="xs">
+        <h3 id="heading"><a data-toggle="collapse" data-target="#formcontent" style="cursor: pointer"
+                            (click)="resetForm(productsForm)">{{action}} Products</a></h3>
+        <div id="formcontent" class="collapse">
+          <div class="tab-content">
+            <div class="tab-pane active" id="horizontal-form">
+              <form id="prodForm" class="form-horizontal" #productsForm='ngForm' (ngSubmit)="actionOnProducts(productsForm.value)">
+
+                <div class="form-group">
+                  <label for="categoryname" class="col-sm-2 control-label">Select Category</label>
+                  <div class="col-sm-8">
+                    <select name="categoryname" [(ngModel)]='_categoryname' id="categoryname" #categoryname='ngModel'
+                            ngModel="" required="" (change)="getSubCategoryData(categoryname.value)"
+                            class="form-control">
+                      <option value="">Select Category</option>
+                      <option *ngFor="let data of getCategory"
+                              value="{{data.categoryname}}">{{data.categoryname}}</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(categoryname.touched && categoryname.errors && categoryname.errors.required)">Select
+                      Category Name</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="subcategoryname" class="col-sm-2 control-label">Select SubCategory</label>
+                  <div class="col-sm-8">
+                    <select name="subcategoryname" [(ngModel)]='_subcategoryname' id="subcategoryname"
+                            #subcategoryname='ngModel' ngModel="" required="" class="form-control">
+                      <option value="">Select SubCategory</option>
+                      <option *ngFor="let data of getSubCategory"
+                              value="{{data.subcategoryid}}">{{data.subcategoryname}}</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(subcategoryname.touched && subcategoryname.errors && subcategoryname.errors.required)">Select
+                      SubCategory name</label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="productname" class="col-sm-2 control-label">Product name</label>
+                  <div class="col-sm-8">
+                    <input type="text" [(ngModel)]='_productname' #productname='ngModel' ngModel="" required=""
+                           name="productname"
+                           id="productname" class="form-control">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(productname.touched && productname.errors && productname.errors.required)">Enter
+                      Product name</label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="price" class="col-sm-2 control-label">Price</label>
+                  <div class="col-sm-8">
+                    <input type="number" [(ngModel)]='_price' #price='ngModel' ngModel="" required="" name="price"
+                           id="price"
+                           class="form-control">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger" *ngIf="(price.touched && price.errors && price.errors.required)">Enter
+                      Price</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="discount" class="col-sm-2 control-label">Discount </label>
+                  <div class="col-sm-8">
+                    <input type="number" [(ngModel)]='_discount' #discount='ngModel' ngModel="" required=""
+                           name="discount"
+                           id="discount" class="form-control">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(discount.touched && discount.errors && discount.errors.required)">Enter
+                      Discount</label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="photo" class="col-sm-2 control-label">Photo</label>
+                  <div class="col-sm-8">
+                    <input type="file" #photo='ngModel' ngModel="" [required]="isphoto" name="photo" id="photo"
+                           (change)="getFile($event)" class="form-control">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger" *ngIf="(photo.touched && photo.errors && photo.errors.required)">Select
+                      Photo</label>
+                  </div>
+                  <img src="" alt="" id="img1" style="padding-top: 5px; height: 80px">
+                </div>
+
+                <div class="form-group">
+                  <label for="productdescription" class="col-sm-2 control-label">Product Description</label>
+                  <div class="col-sm-8">
+                <textarea [(ngModel)]='_productdescription' #productdescription='ngModel' required="" ngModel=""
+                          maxlength="500" name="productdescription" id="productdescription"
+                          class="form-control"></textarea>
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(productdescription.touched && productdescription.errors && productdescription.errors.required)">Enter
+                      Product Description</label>
+                  </div>
+                </div>
+                <div class="panel-footer">
+                  <div class="row">
+                    <div class="col-sm-1 col-sm-offset-2">
+                      <input type="submit" value="{{action}}" class="btn btn-primary" id="btn1"
+                             [disabled]="!productsForm.valid">
+                    </div>
+                    <div class="col-sm-1">
+                      <button type="button" class="btn-default btn" data-toggle="collapse" data-target="#formcontent"
+                              (click)="resetForm(productsForm)">Cancel
+                      </button>
+                    </div>
+                  </div>
+                  <div class="padding-t-5">
+                    <ng-container *ngIf="serverResponse === 'success'; else elseif1"><div class="alert alert-success">
+                      <a style="cursor: pointer" class="close" data-dismiss="alert" >&times;</a>
+                      <strong>Success</strong>
+                    </div>
+                    </ng-container>
+                    <ng-template #elseif1>
+                      <ng-container *ngIf="serverResponse === 'failed'"><div class="alert alert-danger">
+                        <a style="cursor: pointer" class="close" data-dismiss="alert" >&times;</a>
+                        <strong>Error.. Product not added</strong>
+                      </div>
+                      </ng-container>
+                    </ng-template>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tables -->
+        <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
+             data-widget-static="">
+          <div class="panel-heading">
+            <h2 class="text-center text-info">Products Table</h2>
+            <div class="panel-ctrls" data-actions-container=""
+                 data-action-collapse="{&quot;target&quot;: &quot;.panel-body&quot;}"><span
+              class="button-icon has-bg"><i
+              class="ti ti-angle-down"></i></span></div>
+          </div>
+          <div class="panel-body no-padding" style="display: block;">
+            <div class="table-responsive">
+              <table class="table table-striped">
+
+                <thead>
+                <tr class="warning">
+                  <!--            <th>#</th>-->
+                  <th>Category&nbsp;Name</th>
+                  <th>SubCategory&nbsp;Name</th>
+                  <th>Product&nbsp;Name</th>
+                  <th>Price</th>
+                  <th>Discount</th>
+                  <th>Photo</th>
+                  <th>Description</th>
+                  <th class="text-center" colspan="3">Controls</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr *ngFor="let data of getProducts">
+                  <td>{{data.categoryname}}</td>
+                  <td>{{data.subcategoryname}}</td>
+                  <td>{{data.productname}}</td>
+                  <td>{{data.price}}</td>
+                  <td>{{data.discount}}</td>
+                  <td><img src="{{url}}{{data.photo}}" alt="" style="height: 80px;"></td>
+                  <td>{{data.description}}</td>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-danger" (click)="deleteProduct(data.productid)">
+                      <i class="fas fa-trash-alt"></i></button>
+                  </td>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#formcontent"
+                            (click)="editProduct(data)">
+                      <i class="fas fa-edit"></i></button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-success"
+                            routerLink="/adminHome/managestock/{{data.productid}}">Add
+                      to Stock
+                    </button>
+                  </td>
+
+                </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /#page-wrapper -->
+
+  <!-- /#wrapper -->
+  <!-- Nav CSS -->
+</div>
+<app-staff-footer></app-staff-footer>

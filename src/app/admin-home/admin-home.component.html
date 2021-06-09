@@ -1,0 +1,195 @@
+<!--HEADER-->
+<app-admin-header></app-admin-header>
+
+<div id="wrapper">
+  <div id="page-wrapper">
+    <div class="graphs">
+      <div class="xs">
+
+        <div class="container">
+          <div class="col_3">
+            <div class="col-lg-3 col-md-6 col-sm-12 widget widget1">
+              <div class="r3_counter_box">
+                <i class="pull-left fa fa-thumbs-up icon-rounded"></i>
+                <div class="stats text-center">
+                  <h5 class=""><strong>{{categoryCount}}</strong></h5>
+                  <span>Categories</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 widget widget1">
+              <div class="r3_counter_box">
+                <div class="stats text-center">
+                  <h5><strong>{{subCategoryCount}}</strong></h5>
+                  <span>Sub Categories</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 widget widget1">
+              <div class="r3_counter_box">
+                <i class="pull-left fa fa-comment user2 icon-rounded"></i>
+                <div class="stats text-center">
+                  <h5><strong>{{productCount}}</strong></h5>
+                  <span>Products</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 widget">
+              <div class="r3_counter_box">
+                <div class="stats text-center">
+                  <h5><strong>{{staffCount}}</strong></h5>
+                  <span>Staff Members</span>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+
+        <div class="content_bottom" style="padding: 40px 0">
+          <div class="col-md-8 span_3">
+            <div class="bs-example1" data-example-id="contextual-table">
+              <form #fromDateToDateForm='ngForm' (ngSubmit)="getBetweenOrdersCount(fromDateToDateForm.value)"
+                    class="form-inline">
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label for="fromDate">From</label>
+                      <input type="date" name="fromDate" id="fromDate" #fromDate='ngModel' ngModel="" required=""
+                             class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label for="toDate">To</label>
+                      <input type="date" name="toDate" id="toDate" #toDate='ngModel' ngModel="" required=""
+                             class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-2 ">
+                    <br>
+                    <input type="submit" value="Search" class="btn btn-primary mt-md-2" id="btn1"
+                           [disabled]="!fromDateToDateForm.valid">
+                  </div>
+                </div>
+
+
+              </form>
+            </div>
+
+            <div *ngIf="betweenOrderData.length>0" class="col-md-12 col_1_of_2 span_1_of_2">
+              <a class="tiles_info">
+                <div class="tiles-head red1">
+                  <div class="text-center">Total Orders</div>
+                </div>
+                <div class="tiles-body red">{{betweenOrderData.length}}</div>
+              </a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div *ngIf="betweenOrderData.length>0" class="bs-example1" data-example-id="contextual-table">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Amount</th>
+                    <th>Date-Time</th>
+                    <th>Payment&nbsp;Mode</th>
+                    <th>Mobile&nbsp;No</th>
+                    <th>Status</th>
+                    <th>Staff&nbsp;Username</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let data of betweenOrderData; let i=index" [ngClass]="{'active':(i)%2==0}">
+                    <th scope="row">{{i + 1}}</th>
+                    <td>{{data.amount}}</td>
+                    <td>{{data.datetime}}</td>
+                    <td>{{data.paymentmode}}</td>
+                    <td>{{data.mobileno}}</td>
+                    <td>{{data.status}}</td>
+                    <td>{{data.staffusername}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div *ngIf="betweenOrderData2 == 'noOrdersFound'" style="padding: 40px 0">
+              <div class="jumbotron">
+                <h2 class="text-center text-danger">No Orders Found <i class="far fa-frown"></i></h2>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-4 span_4">
+            <div class="col_2">
+              <div class="box_1">
+                <div class="col-md-6 col_1_of_2 span_1_of_2">
+                  <a class="tiles_info">
+                    <div class="tiles-head red1">
+                      <div class="text-center">Total Orders</div>
+                    </div>
+                    <div class="tiles-body red">{{orderCount}}</div>
+                  </a>
+                </div>
+                <div class="col-md-6 col_1_of_2 span_1_of_2">
+                  <a class="tiles_info tiles_blue">
+                    <div class="tiles-head tiles_blue1">
+                      <div class="text-center">Daily Orders</div>
+                    </div>
+                    <div class="tiles-body blue1">{{dailyOrderCount}}</div>
+                  </a>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="box_1">
+                <div class="col-md-6 col_1_of_2 span_1_of_2">
+                  <a class="tiles_info">
+                    <div class="tiles-head fb1">
+                      <div class="text-center">Monthly Orders</div>
+                    </div>
+                    <div class="tiles-body fb2">{{monthlyOrderCount}}</div>
+                  </a>
+                </div>
+                <div class="col-md-6 col_1_of_2 span_1_of_2">
+                  <a class="tiles_info tiles_blue">
+                    <div class="tiles-head tw1">
+                      <div class="text-center">Yearly Orders</div>
+                    </div>
+                    <div class="tiles-body tw2">{{yearlyOrderCount}}</div>
+                  </a>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+            <div class="cloud">
+              <div class="grid-date">
+                <div class="date">
+                  <p class="date-in">Today Stock</p>
+                  <span class="date-on"><i class="fa fa-cloud-upload"> </i></span>
+                  <div class="clearfix"></div>
+                </div>
+                <h4>{{dailyStockCount}}</h4>
+              </div>
+              <p class="monday">Monday 31 may</p>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-staff-footer></app-staff-footer>
+
+<style>
+  .form-group, .form-control {
+    width: 100% !important;
+  }
+</style>

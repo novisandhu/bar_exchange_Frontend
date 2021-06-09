@@ -1,0 +1,72 @@
+
+<div class="top-banner">
+  <div class="container">
+    <div class="top-banner-left">
+      <ul>
+        <li><i class="fa fa-phone" aria-hidden="true"></i> +91 8146766919</li>
+        <li><a href="mailto:example@email.com"><i class="fa fa-envelope" aria-hidden="true"></i> Navpreet6133@gmail.com</a>
+        </li>
+      </ul>
+    </div>
+    <div class="top-banner-right">
+      <ul>
+        <li><a class="facebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        <li><a class="facebook" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        <li><a class="facebook" href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+        <li><a class="facebook" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="header">
+  <div class="container">
+    <div class="logo">
+      <h1>
+        <a routerLink="/staffHome">Cafe Delish</a>
+      </h1>
+    </div>
+    <div class="top-nav">
+      <nav class="navbar navbar-default">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1">Menu
+        </button>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a class="active" routerLink="/staffHome">Home</a></li>
+<!--            <li><a href="about.html">About</a></li>-->
+
+            <ng-container *ngIf="type === 'Captain'; else elseif1">
+              <li><a routerLink="/staffHome/Menu">Menu</a></li>
+              <li><a routerLink="/staffHome/cookedorders">Cooked-Orders<sup><span class="badge badge-warning" id="cookedOrderCount">0</span></sup></a></li>
+              <li><a routerLink="/staffHome/vieworder">Order-History</a></li>
+              <li><a routerLink="/staffHome/Menu/Cart"><i class="fa fa-shopping-cart"></i><sup><span class="badge badge-warning" id="cartCount">empty</span></sup></a></li>
+            </ng-container>
+            <ng-template #elseif1>
+              <ng-container *ngIf="type === 'Kitchen';else elseif2">
+                <li><a routerLink="/staffHome/pendingorders">Pending-Orders<sup><span class="badge badge-warning" id="pendingOrderCount">0</span></sup></a></li>
+              </ng-container>
+            </ng-template>
+            <ng-template #elseif2>
+              <ng-container *ngIf="type === 'Cashier'">
+                <li><a routerLink="/staffHome/payment">Payment</a></li>
+              </ng-container>
+            </ng-template>
+
+            <li class="dropdown"><a routerLink="/staffHome" class="dropdown-toggle hvr-bounce-to-bottom" data-toggle="dropdown"
+                   role="button" aria-haspopup="true" aria-expanded="false">{{type}}<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a class="hvr-bounce-to-bottom" routerLink="/staffHome/staffChangePassword">Change Password</a></li>
+                <li><a class="hvr-bounce-to-bottom" href="" (click)="logout()">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+      </nav>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>

@@ -1,0 +1,201 @@
+<!--<app-admin-header></app-admin-header>-->
+
+<!--<div class="container-fluid">-->
+<!--  <i class="fa fa-plus-circle text-success fa-2x" id="icon" data-toggle="modal" data-target="#modal1" style="cursor: pointer">Add Stock</i>-->
+
+<!--  <div  class="modal fade" id="modal1" #model1>-->
+<!--    <div class="modal-dialog">-->
+<!--      <div class="modal-content">-->
+<!--        <div class="modal-header"><h2> Add Stock </h2>-->
+<!--          <button class="close" type="button" data-dismiss="modal" (click)="stockForm.reset()">&times;</button>-->
+<!--        </div>-->
+<!--        <div class="modal-body">-->
+<!--          <form #stockForm='ngForm' (ngSubmit)="addStock(stockForm.value)">-->
+
+<!--            <div class="form-group">-->
+<!--              <label for="productname">Select Product</label>-->
+<!--              <select [(ngModel)]='_productname' name="productname" id="productname" #productname='ngModel'  ngModel="" required="" class="form-control">-->
+<!--                <option selected value="">Select Product</option>-->
+<!--                <option *ngFor="let data of getProducts" value="{{data.productid}}">{{data.productname}}</option>-->
+<!--              </select>-->
+<!--              <label class="text-danger" *ngIf="(productname.touched && productname.errors && productname.errors.required)">Enter product name</label>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="qty">Product Quantity </label>-->
+<!--              <input type="number" #qty='ngModel'  ngModel="" name="qty" id="qty" class="form-control">-->
+<!--              <label class="text-danger" *ngIf="(qty.touched && qty.errors && qty.errors.required)">Enter-->
+<!--                Product Quantity</label>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="vendorname">Vendor name</label>-->
+<!--              <input type="text" #vendorname='ngModel'  ngModel="" name="vendorname" id="vendorname" class="form-control">-->
+<!--              <label class="text-danger" *ngIf="(vendorname.touched && vendorname.errors && vendorname.errors.required)">Enter-->
+<!--                Vendor name</label>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+
+<!--              <input type="submit" value="Add Stock" class="btn btn-primary" id="btn1" [disabled]="!stockForm.valid">-->
+<!--              <p>{{serverResponse}}</p>-->
+
+<!--            </div>-->
+
+<!--          </form>-->
+<!--        </div>-->
+<!--        <div class="modal-footer">-->
+<!--          <button class="close" type="button" data-dismiss="modal" (click)="stockForm.reset()">close</button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="container">-->
+<!--  <div class="table-responsive">-->
+<!--    <table class="table table-bordered table-striped table-hover table-success table-sm">-->
+<!--      <caption>Stock data</caption>-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th>Product Name</th>-->
+<!--        <th>Quantity</th>-->
+<!--        <th>Vendor name</th>-->
+<!--      </tr>-->
+<!--      </thead>-->
+
+<!--      <tbody>-->
+<!--      <tr *ngFor="let data of getStock">-->
+<!--        <td>{{data.productname}}</td>-->
+<!--        <td>{{data.qty}}</td>-->
+<!--        <td>{{data.vendorname}}</td>-->
+<!--      </tr>-->
+
+<!--      </tbody>-->
+
+<!--    </table>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<div id="wrapper">
+  <app-admin-header></app-admin-header>
+  <div id="page-wrapper">
+    <div class="graphs">
+      <div class="xs">
+        <h3><a id="icon" data-toggle="collapse" data-target="#formcontent" style="cursor: pointer" (click)="resetForm(stockForm)">Add
+          Stock</a></h3>
+        <div id="formcontent" class="collapse">
+          <div class="tab-content">
+            <div class="tab-pane active" id="horizontal-form">
+              <form class="form-horizontal" #stockForm='ngForm' (ngSubmit)="addStock(stockForm.value)">
+                <div class="form-group">
+                  <label for="productname" class="col-sm-2 control-label">Select Product</label>
+                  <div class="col-sm-8">
+                    <select [(ngModel)]='_productname' name="productname" id="productname" #productname='ngModel'
+                            ngModel="" required="" class="form-control">
+                      <option selected value="">Select Product</option>
+                      <option *ngFor="let data of getProducts" value="{{data.productid}}">{{data.productname}}</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(productname.touched && productname.errors && productname.errors.required)">Select
+                      product name</label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="qty" class="col-sm-2 control-label">Product Quantity </label>
+                  <div class="col-sm-8">
+                    <input type="number" #qty='ngModel' ngModel="" name="qty" id="qty" required=""
+                           class="form-control">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger" *ngIf="(qty.touched && qty.errors && qty.errors.required)">Enter
+                      Product Quantity</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="vendorname" class="col-sm-2 control-label">Vendor name</label>
+                  <div class="col-sm-8">
+                    <input type="text" #vendorname='ngModel' ngModel="" name="vendorname" required="" id="vendorname"
+                           class="form-control">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(vendorname.touched && vendorname.errors && vendorname.errors.required)">Enter
+                      Vendor name</label>
+                  </div>
+                </div>
+
+
+                <div class="panel-footer">
+                  <div class="row">
+                    <div class="col-sm-1 col-sm-offset-2">
+
+                      <input type="submit" value="Add Stock" class="btn btn-primary" id="btn1"
+                             [disabled]="!stockForm.valid">
+                    </div>
+                    <div class="col-sm-1">
+                      <button type="button" class="btn-default btn" data-toggle="collapse" data-target="#formcontent"
+                              (click)="stockForm.reset()">Cancel
+                      </button>
+                    </div>
+                  </div>
+                  <div class="padding-t-5">
+                    <ng-container *ngIf="serverResponse === 'success'; else elseif1"><div class="alert alert-success">
+                      <a style="cursor: pointer" class="close" data-dismiss="alert" >&times;</a>
+                      <strong>Success</strong>
+                    </div>
+                    </ng-container>
+                    <ng-template #elseif1>
+                      <ng-container *ngIf="serverResponse === 'failed'"><div class="alert alert-danger">
+                        <a style="cursor: pointer" class="close" data-dismiss="alert" >&times;</a>
+                        <strong>Error.. Stock not added</strong>
+                      </div>
+                      </ng-container>
+                    </ng-template>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+        <!--        <h3>Basic Tables</h3>-->
+        <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
+             data-widget-static="">
+          <div class="panel-heading">
+            <h2>Stock Table</h2>
+            <div class="panel-ctrls" data-actions-container=""
+                 data-action-collapse="{&quot;target&quot;: &quot;.panel-body&quot;}"><span
+              class="button-icon has-bg"><i
+              class="ti ti-angle-down"></i></span></div>
+          </div>
+          <div class="panel-body no-padding" style="display: block;">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                <tr class="warning">
+                  <!--                            <th>#</th>-->
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Vendor name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let data of getStock">
+                  <td>{{data.productname}}</td>
+                  <td>{{data.qty}}</td>
+                  <td>{{data.vendorname}}</td>
+
+                </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<app-staff-footer></app-staff-footer>

@@ -1,0 +1,51 @@
+ <div class="w3layouts-banner-top">
+
+</div>
+<!-- banner -->
+<div class="banner about-banner">
+
+
+  <div class="w3-about-heading">
+    <h2>Staff Login</h2>
+  </div>
+</div>
+
+
+<div class="gallery">
+  <div class="container">
+    <div class="agileinfo-gallery">
+      <div class="row">
+        <div class="col-md-12 offset-md-2">
+          <form class="form-horizontal" #staffLoginForm='ngForm' (ngSubmit)="staffLogin(staffLoginForm.value)">
+
+            <div class="form-group">
+              <label for="username">UserName</label>
+              <input placeholder="username" type="text" #username='ngModel' required="" ngModel="" name="username"
+                     class="form-control" id="username">
+              <!--          <span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span>-->
+
+            <label class="text-danger" *ngIf="(username.touched && username.errors && username.errors.required)">Enter
+              username</label>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input placeholder="Password" type="password" #password='ngModel' required="" ngModel="" name="password"
+                     class="form-control" id="password">
+
+            <label class="text-danger" *ngIf="(password.touched && password.errors && password.errors.required)">Enter
+              password</label>
+            <!--          <span class="icon2"><i class="fa fa-unlock" aria-hidden="true"></i></span>-->
+            </div>
+            <div class="form-group">
+              <input type="submit" value="Submit" class="btn btn-primary" [disabled]="!staffLoginForm.valid">
+              <p>{{serverResponse}}</p>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

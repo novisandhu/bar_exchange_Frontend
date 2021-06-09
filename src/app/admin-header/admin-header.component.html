@@ -1,0 +1,62 @@
+<div class="top-banner">
+  <div class="container">
+    <div class="top-banner-left">
+      <ul>
+        <li><i class="fa fa-phone" aria-hidden="true"></i>  +91 8146766919</li>
+        <li><a href="mailto:example@email.com"><i class="fa fa-envelope" aria-hidden="true"></i> Navpreet6133@gmail.com</a>
+        </li>
+      </ul>
+    </div>
+    <div class="top-banner-right">
+      <ul>
+        <li><a class="facebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        <li><a class="facebook" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        <li><a class="facebook" href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+        <li><a class="facebook" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="header">
+  <div class="container">
+    <div class="logo">
+      <h1>
+        <a routerLink="/adminHome">Cafe Delish</a>
+      </h1>
+    </div>
+    <div class="top-nav">
+      <nav class="navbar navbar-default">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1">Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a class="" routerLink="/adminHome">Home</a></li>
+            <li>  <a routerLink="/adminHome/categories"><i class="fa fa-calculator nav_icon"></i>Manage Categories</a>            </li>
+            <li>
+              <a routerLink="/adminHome/subcategories"><i class="fa fa-flask nav_icon"></i>Manage SubCategories</a>
+            </li>
+            <li>
+              <a routerLink="/adminHome/manageproducts"><i class="fa fa-flask nav_icon"></i>Manage Products</a>
+            </li>
+            <li>
+              <a routerLink="/adminHome/managestaff"><i class="fa fa-flask nav_icon"></i>Manage Staff</a>
+            </li>
+            <li>
+              <a routerLink="/adminHome/managestock/nullid"><i class="fa fa-flask nav_icon"></i>Manage Stock</a>
+            </li>
+
+                <li><a  routerLink="/adminHome/adminChangePassword">Change Password</a></li>
+                <li><a (click)="logout()">Logout</a></li>
+
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+      </nav>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>

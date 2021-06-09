@@ -1,0 +1,42 @@
+<div class="w3layouts-banner-top">
+
+</div>
+<!-- banner -->
+<div class="banner about-banner">
+
+  <app-staff-header></app-staff-header>
+
+  <div class="w3-about-heading">
+    <h2>Pending Orders</h2>
+  </div>
+</div>
+<!-- banner -->
+<!--gallery-->
+
+<div class="panel-body no-padding" style="display: block;">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr class="warning">
+        <!--            <th>#</th>-->
+        <th>Product Detail</th>
+        <th>Qty</th>
+        <th>Date-Time</th>
+        <th>Mobile No</th>
+        <th>status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of getOrderDetails; let i=index">
+        <td><img src="{{url}}{{data.photo}}" alt="" style="height: 80px;"><h4>{{data.productname}}</h4></td>
+        <td>{{data.qty}}</td>
+        <td>{{data.datetime}}</td>
+        <td>{{data.mobileno}}</td>
+        <td><button type="button" class="btn-info btn" (click)="changeStatus(data.detailid,data.orderid,'served')">{{data.status}}</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-staff-footer></app-staff-footer>

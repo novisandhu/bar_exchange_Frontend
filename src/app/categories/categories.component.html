@@ -1,0 +1,124 @@
+<app-admin-header></app-admin-header>
+
+<div id="container">
+
+        <h3><a data-toggle="collapse" data-target="#formcontent" style="cursor: pointer" (click)="resetForm(CategoryForm)">{{action}} Category</a></h3>
+        <div id="formcontent" class="collapse">
+          <div class="tab-content">
+            <div class="tab-pane active" id="horizontal-form">
+              <form class="form-horizontal" #CategoryForm='ngForm' (ngSubmit)="actionOnCategory(CategoryForm.value)">
+                <div class="form-group">
+                  <label for="categoryname" class="col-sm-2 control-label">Category Name</label>
+                  <div class="col-sm-8">
+                    <input type="text" [(ngModel)]='_categoryname' #categoryname='ngModel' required ngModel=""
+                           name="categoryname" class="form-control" id="categoryname" placeholder="Category Name">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(categoryname.touched && categoryname.errors && categoryname.errors.required)">Enter
+                      Category Name</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="categorydescription" class="col-sm-2 control-label">Category Description</label>
+                  <div class="col-sm-8">
+                    <!--                  <input disabled="" type="text" class="form-control" id="categorydescription" placeholder="Disabled Input">-->
+                    <textarea [(ngModel)]='_description' #categorydescription='ngModel' required maxlength="150"
+                              ngModel="" name="categorydescription" id="categorydescription"
+                              placeholder="Category Description"
+                              class="form-control">{{categorydescription}}</textarea>
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="text-danger"
+                           *ngIf="(categorydescription.touched && categorydescription.errors && categorydescription.errors.required)">Enter
+                      Category Description</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="supercategory" class="col-sm-2 control-label">Super Category</label>
+                  <div class="col-sm-8">
+                    <input type="text" [(ngModel)]='_supercategory' #supercategory='ngModel' ngModel=""
+                           name="supercategory" class="form-control" id="supercategory" placeholder="Super Category">
+                  </div>
+                </div>
+                <div class="panel-footer">
+                  <div class="row">
+                    <div class="col-sm-1 col-sm-offset-2">
+                      <input type="submit" value="{{action}}" class="btn btn-primary" id="btn1"
+                             [disabled]="!CategoryForm.valid">
+                    </div>
+                    <div class="col-sm-1">
+                      <button type="button" class="btn-default btn" data-toggle="collapse" data-target="#formcontent" (click)="resetForm(CategoryForm)">Cancel</button>
+                    </div>
+                  </div>
+                  <div class="padding-t-5">
+                    <ng-container *ngIf="serverResponse === 'success'; else elseif1"><div class="alert alert-success">
+                      <a style="cursor: pointer" class="close" data-dismiss="alert" >&times;</a>
+                      <strong>Success</strong>
+                    </div>
+                    </ng-container>
+                    <ng-template #elseif1>
+                      <ng-container *ngIf="serverResponse === 'failed'"><div class="alert alert-danger">
+                        <a style="cursor: pointer" class="close" data-dismiss="alert" >&times;</a>
+                        <strong>Error.. Category not added</strong>
+                      </div>
+                      </ng-container>
+                    </ng-template>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
+             data-widget-static="">
+          <div class="panel-heading">
+            <h2>Category Table</h2>
+            <div class="panel-ctrls" data-actions-container=""
+                 data-action-collapse="{&quot;target&quot;: &quot;.panel-body&quot;}"><span
+              class="button-icon has-bg"><i class="ti ti-angle-down"></i></span></div>
+          </div>
+          <div class="panel-body no-padding" style="display: block;">
+            <table class="table table-striped">
+              <thead>
+              <tr class="warning">
+                <!--            <th>#</th>-->
+                <th>Category Name</th>
+                <th>Category Description</th>
+                <th>Super Category</th>
+                <th colspan="2">Controls</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <tr *ngFor="let data of getCategory">
+                <td>{{data.categoryname}}</td>
+                <td>{{data.categorydescription}}</td>
+                <td>{{data.supercategory}}</td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-danger" (click)="deleteCategory(data.categoryname)"><i
+                    class="fas fa-trash-alt"></i></button>
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#formcontent" href="#formcontent"
+                          (click)="editCategory({categoryname:data.categoryname,categorydescription:data.categorydescription,supercategory:data.supercategory})">
+                    <i class="fas fa-edit"></i></button>
+                </td>
+
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+        <!-- /#page-wrapper -->
+
+        <!-- /#wrapper -->
+        <!-- Nav CSS -->
+
+      </div>
+
+
+<app-staff-footer></app-staff-footer>

@@ -1,0 +1,100 @@
+
+
+<div class="w3layouts-banner-top">
+
+</div>
+<!-- banner -->
+<div class="banner about-banner">
+
+  <app-staff-header></app-staff-header>
+
+  <div class="w3-about-heading">
+    <h2>Shopping Cart</h2>
+  </div>
+</div>
+
+<div class="panel-body no-padding" style="display: block;">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr class="warning">
+        <!--            <th>#</th>-->
+        <th>Product Detail</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Total</th>
+        <th>Control</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let data of getCart; let i=index" >
+        <td><img src="{{url}}{{data.photo}}" alt="" style="height: 80px;"><h4>{{data.productname}}</h4></td>
+        <td><div *ngIf="data.discount>0 ;else other_content">
+          <del>{{data.price}}</del>
+          {{tab[i]}}
+        </div>
+          <ng-template #other_content>
+            {{data.price}}
+          </ng-template>
+        </td>
+        <td><form class="form-inline"><button class="btn btn-secondary {{data.qty}} === 1 ? 'disabled' : ''" [disabled]="data.qty === 1" (click)="updateCart(data.productid,'minus')"> <i class="fa fa-minus"></i></button><span style="border:1px solid #ccc;padding: 7px 30px;">{{data.qty}}</span><button class="btn btn-secondary {{data.qty}} === {{data.maxQty}} ? 'disabled' : ''" [disabled]="data.qty===data.maxQty" (click)="updateCart(data.productid,'plus')" ><i class="fa fa-plus"></i></button></form></td>
+        <td>{{total[i]}}</td>
+        <td class="text-center">
+          <button type="button" class="btn btn-danger" (click)="removeFromCart(data.productid)"><i
+            class="fas fa-trash-alt"></i></button>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colspan="6" class="text-right"> <strong>Grand Total : {{gTotal}}</strong> </th>
+      </tr>
+      </tfoot>
+    </table>
+
+    <div class="">
+      <button type="button" data-toggle="modal" data-target="#modal1" value="Checkout" class="btn btn-success btn-lg" [disabled]="gTotal===0">Checkout</button>
+    </div>
+  </div>
+</div>
+  <div  class="modal fade" id="modal1" #model1>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header"><h2>Order Details</h2>
+          <button class="close" type="button" data-dismiss="modal" (click)="orderdetailForm.reset()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form #orderdetailForm='ngForm' (ngSubmit)="addOrderDetail(orderdetailForm.value)">
+
+            <div class="form-group">
+              <label for="paymentmode">Select Payment Mode</label>
+              <select  name="paymentmode"  id="paymentmode" #paymentmode='ngModel'  ngModel="" required="" class="form-control">
+                <option selected value="">Select Category</option>
+                <option value="Cash">Cash</option>
+                <option value="Online">Online</option>
+              </select>
+              <label class="text-danger" *ngIf="(paymentmode.touched && paymentmode.errors && paymentmode.errors.required)">Select Payment Mode</label>
+            </div>
+            <div class="form-group">
+              <label for="mobile">Mobile no.</label>
+              <input type="number" #mobile='ngModel'  ngModel="" name="mobile" id="mobile" required="" class="form-control">
+              <label class="text-danger" *ngIf="(mobile.touched && mobile.errors && mobile.errors.required)">Enter Mobile no.</label>
+            </div>
+
+            <div class="form-group">
+
+              <input type="submit" value="Order" class="btn btn-primary" id="btn1" [disabled]="!orderdetailForm.valid">
+              <p>{{serverResponse}}</p>
+
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="close" type="button" data-dismiss="modal" (click)="orderdetailForm.reset()">close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<app-staff-footer></app-staff-footer>
